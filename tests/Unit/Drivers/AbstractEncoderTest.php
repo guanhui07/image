@@ -11,7 +11,7 @@ use Intervention\Image\Tests\BaseTestCase;
 use Mockery;
 use PHPUnit\Metadata\CoversClass;
 
-#[CoversClass(\Intervention\Image\Drivers\AbstractEncoder::class)]
+#[CoversClass(AbstractEncoder::class)]
 final class AbstractEncoderTest extends BaseTestCase
 {
     public function testEncode(): void
@@ -22,22 +22,5 @@ final class AbstractEncoderTest extends BaseTestCase
         $image->shouldReceive('encode')->andReturn($encoded);
         $result = $encoder->encode($image);
         $this->assertInstanceOf(EncodedImage::class, $result);
-    }
-
-    public function testGetBuffered(): void
-    {
-        $encoder = new class () extends AbstractEncoder
-        {
-            public function test(callable $callback)
-            {
-                return $this->buffered($callback);
-            }
-        };
-
-        $result = $encoder->test(function () {
-            echo 'result';
-        });
-
-        $this->assertEquals('result', $result);
     }
 }

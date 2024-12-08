@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Intervention\Image\Tests\Unit\Colors\Hsl\Decoders;
 
+use Generator;
 use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\RequiresPhpExtension;
 use Intervention\Image\Colors\Hsl\Color;
 use Intervention\Image\Colors\Hsl\Decoders\StringColorDecoder;
 use Intervention\Image\Tests\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-#[RequiresPhpExtension('gd')]
-#[CoversClass(\Intervention\Image\Colors\Hsl\Decoders\StringColorDecoder::class)]
+#[CoversClass(StringColorDecoder::class)]
 final class StringColorDecoderTest extends BaseTestCase
 {
     #[DataProvider('decodeDataProvier')]
@@ -24,29 +23,27 @@ final class StringColorDecoderTest extends BaseTestCase
         $this->assertEquals($channelValues, $result->toArray());
     }
 
-    public static function decodeDataProvier(): array
+    public static function decodeDataProvier(): Generator
     {
-        return [
-            [
-                'hsl(0,0,0)',
-                Color::class,
-                [0, 0, 0],
-            ],
-            [
-                'hsl(0, 100, 50)',
-                Color::class,
-                [0, 100, 50],
-            ],
-            [
-                'hsl(360, 100, 50)',
-                Color::class,
-                [360, 100, 50],
-            ],
-            [
-                'hsl(180, 100%, 50%)',
-                Color::class,
-                [180, 100, 50],
-            ]
+        yield [
+            'hsl(0,0,0)',
+            Color::class,
+            [0, 0, 0],
+        ];
+        yield [
+            'hsl(0, 100, 50)',
+            Color::class,
+            [0, 100, 50],
+        ];
+        yield [
+            'hsl(360, 100, 50)',
+            Color::class,
+            [360, 100, 50],
+        ];
+        yield [
+            'hsl(180, 100%, 50%)',
+            Color::class,
+            [180, 100, 50],
         ];
     }
 }
